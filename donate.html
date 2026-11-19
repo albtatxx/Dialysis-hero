@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>صندوق التبرع الفوري والدفع الآمن | نبض الأمل</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#00685f",
+            "primary-container": "#008378",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#f4fffc",
+            "primary-fixed": "#89f5e7",
+            "secondary": "#855300",
+            "secondary-container": "#fea619",
+            "on-secondary-container": "#684000",
+            "secondary-fixed": "#ffddb8",
+            "tertiary": "#b90538",
+            "surface": "#fbf9f5",
+            "surface-bright": "#fbf9f5",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f5f3ef",
+            "surface-container": "#efeeea",
+            "surface-container-high": "#eae8e4",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#3d4947",
+            "outline": "#6d7a77",
+            "outline-variant": "#bcc9c6"
+          },
+          fontFamily: {
+            sans: ["Readex Pro", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(28,25,23,0.05)] border-b border-outline-variant/30">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-full bg-secondary-fixed flex items-center justify-center text-primary shadow-[0_2px_8px_rgba(254,166,25,0.25)] group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-[26px]">favorite</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold text-primary tracking-tight">نبض الأمل</span>
+          <span class="text-xs text-secondary font-medium">لأطفال الغسيل الكلوي</span>
+        </div>
+      </a>
+
+      <nav class="hidden xl:flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/20">
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="home" href="index.html">الرئيسية</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="heroes-stories" href="stories.html">قصص وأحلام الأبطال</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="donation-calculator" href="calculator.html">حاسبة التبرع والكفالة</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="partners-and-hospitals" href="partners.html">شراكات ومستشفيات</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="about-initiative" href="about.html">عن المبادرة</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-5 py-2.5 rounded-full text-sm font-bold shadow-[0_4px_16px_rgba(254,166,25,0.3)]" data-path="quick-donate" href="donate.html">
+          <span>تبرّع الآن</span>
+          <span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+        </a>
+        <div class="user-profile-widget flex items-center"></div>
+        <button id="mobileMenuToggle" type="button" class="xl:hidden p-2.5 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/40 z-50 hidden backdrop-blur-sm transition-opacity"></div>
+  <div id="mobileDrawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-surface-container-lowest z-50 p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 translate-x-full">
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between border-b border-outline-variant/30 pb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-[20px]">favorite</span>
+          </div>
+          <span class="text-base text-primary font-bold">نبض الأمل</span>
+        </div>
+        <button id="mobileDrawerClose" type="button" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant">
+          <span class="material-symbols-outlined text-[22px]">close</span>
+        </button>
+      </div>
+      <nav class="flex flex-col gap-1.5">
+        <a href="index.html" data-path="home" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">الرئيسية</a>
+        <a href="stories.html" data-path="heroes-stories" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">قصص وأحلام الأبطال</a>
+        <a href="calculator.html" data-path="donation-calculator" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">حاسبة التبرع والكفالة</a>
+        <a href="partners.html" data-path="partners-and-hospitals" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">شراكات ومستشفيات</a>
+        <a href="about.html" data-path="about-initiative" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">عن المبادرة</a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-outline-variant/30">
+      <a href="donate.html" class="w-full py-3.5 rounded-full bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-bold text-center block">تبرّع الآن 💛</a>
+    </div>
+  </div>
+
+  <!-- MAIN CHECKOUT -->
+  <main class="w-full pt-28 pb-20 bg-surface min-h-screen">
+    <div class="max-w-4xl mx-auto px-6 flex flex-col gap-8">
+      
+      <!-- Page Title -->
+      <div class="text-center flex flex-col gap-2">
+        <span class="text-xs font-bold text-secondary uppercase tracking-wider">بوابة الدفع الآمنة والكفالة المعتمدة</span>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-on-surface">صندوق الأمل الفوري وكفالة الجلسات</h1>
+        <p class="text-sm text-on-surface-variant">عمليات التبرع موثقة ومحمية ومشفرة بأعلى معايير الأمان 256-bit SSL</p>
+      </div>
+
+      <!-- Donation Form Container -->
+      <div class="bg-surface-container-lowest p-6 md:p-10 rounded-3xl shadow-xl border border-outline-variant/30 flex flex-col gap-8">
+        
+        <form id="donationCheckoutForm" onsubmit="handleDonationSubmit(event)" class="flex flex-col gap-8">
+          
+          <!-- 1. Target Campaign / Hero -->
+          <div class="flex flex-col gap-2.5">
+            <label class="text-sm font-bold text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]">person_heart</span>
+              <span>توجيه التبرع إلى:</span>
+            </label>
+            <select id="donateTargetHero" class="w-full px-4 py-3 rounded-2xl bg-surface-container-low border border-outline-variant/40 focus:outline-none focus:border-primary text-sm font-medium">
+              <option value="عام (الحالات الأكثر احتياجاً)">🌟 صندوق الغسيل الكلوي العام (الحالات الأكثر احتياجاً)</option>
+              <option value="الطفلة سارة">🎨 كفالة الطفلة سارة (8 سنوات - الرياض)</option>
+              <option value="الطفل عمر">🤖 كفالة الطفل عمر (10 سنوات - جدة)</option>
+              <option value="الطفلة فاطمة">🌸 كفالة الطفلة فاطمة (11 سنة - مكة المكرمة)</option>
+              <option value="الطفل ريان">🦸‍♂️ كفالة الطفل ريان (6 سنوات - الدمام)</option>
+              <option value="الطفل يوسف">🚀 كفالة الطفل يوسف (9 سنوات - أبها)</option>
+              <option value="الطفلة جود">💖 كفالة الطفلة جود (7 سنوات - الطائف)</option>
+            </select>
+          </div>
+
+          <!-- 2. Donation Frequency -->
+          <div class="flex flex-col gap-2.5">
+            <label class="text-sm font-bold text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[20px]">repeat</span>
+              <span>تكرار التبرع:</span>
+            </label>
+            <div class="grid grid-cols-2 p-1 rounded-2xl bg-surface-container-low text-xs font-semibold">
+              <button id="btnCheckoutOnce" type="button" onclick="setCheckoutFrequency('once')" class="py-3 rounded-xl bg-surface-container-lowest text-primary font-bold shadow-sm text-center transition-all">
+                تبرع لمرة واحدة
+              </button>
+              <button id="btnCheckoutMonthly" type="button" onclick="setCheckoutFrequency('monthly')" class="py-3 rounded-xl text-on-surface-variant hover:text-on-surface text-center transition-all">
+                كفالة دورية شهرية
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Preset Amounts -->
+          <div class="flex flex-col gap-3">
+            <label class="text-sm font-bold text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-tertiary text-[20px]">payments</span>
+              <span>قيمة التبرع (ريال سعودي):</span>
+            </label>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="setCheckoutAmount(100, this, 'سلة ألعاب ورسم أثناء الجلسة')" class="checkout-amount-btn p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-center hover:border-primary transition-all">
+                <span class="block text-lg font-bold text-on-surface">100 ر.س</span>
+                <span class="text-[11px] text-on-surface-variant">سلة ألعاب ورسم</span>
+              </button>
+
+              <button type="button" onclick="setCheckoutAmount(250, this, 'كفالة جلسة غسيل كاملة')" class="checkout-amount-btn active p-3.5 rounded-2xl bg-primary-fixed/30 border-2 border-primary text-center hover:border-primary transition-all">
+                <span class="block text-lg font-bold text-primary">250 ر.س</span>
+                <span class="text-[11px] text-on-primary-fixed-variant font-medium">كفالة جلسة كاملة</span>
+              </button>
+
+              <button type="button" onclick="setCheckoutAmount(500, this, 'كفالة جلستين غسيل')" class="checkout-amount-btn p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-center hover:border-primary transition-all">
+                <span class="block text-lg font-bold text-on-surface">500 ر.س</span>
+                <span class="text-[11px] text-on-surface-variant">كفالة جلستين</span>
+              </button>
+
+              <button type="button" onclick="setCheckoutAmount(1000, this, 'كفالة علاجية شهرية')" class="checkout-amount-btn p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-center hover:border-primary transition-all">
+                <span class="block text-lg font-bold text-on-surface">1,000 ر.س</span>
+                <span class="text-[11px] text-on-surface-variant">كفالة شهر كامل</span>
+              </button>
+
+              <button type="button" onclick="setCheckoutAmount(2500, this, 'كفالة 10 جلسات غسيل')" class="checkout-amount-btn p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-center hover:border-primary transition-all">
+                <span class="block text-lg font-bold text-on-surface">2,500 ر.س</span>
+                <span class="text-[11px] text-on-surface-variant">10 جلسات غسيل</span>
+              </button>
+
+              <div class="flex items-center px-3 rounded-2xl bg-surface-container-low border border-outline-variant/30 focus-within:border-primary">
+                <input type="number" id="checkoutCustomAmount" min="10" placeholder="مبلغ مخصص" oninput="onCheckoutCustomAmount(this)" class="w-full bg-transparent text-left font-bold text-primary py-2 text-sm focus:outline-none placeholder:text-xs placeholder:text-outline"/>
+                <span class="text-xs font-bold text-on-surface ps-1">ر.س</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Donor Information -->
+          <div class="flex flex-col gap-4 pt-4 border-t border-outline-variant/30">
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-bold text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+                <span>بيانات المتبرع الكريم:</span>
+              </label>
+              <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-on-surface-variant font-medium">
+                <input type="checkbox" id="anonCheckbox" onchange="toggleAnonymous(this)" class="rounded text-primary focus:ring-primary w-4 h-4"/>
+                <span>التبرع كفاعل خير (مجهول)</span>
+              </label>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div id="donorNameContainer">
+                <label class="block text-xs font-semibold text-on-surface mb-1">الاسم الكامل *</label>
+                <input type="text" id="donorName" required placeholder="اسمك الكريم" class="w-full px-4 py-2.5 rounded-xl bg-surface-container-low border border-outline-variant/40 focus:outline-none focus:border-primary text-sm"/>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-on-surface mb-1">البريد الإلكتروني لإرسال الإيصال *</label>
+                <input type="email" id="donorEmail" required placeholder="name@example.com" class="w-full px-4 py-2.5 rounded-xl bg-surface-container-low border border-outline-variant/40 focus:outline-none focus:border-primary text-sm"/>
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="block text-xs font-semibold text-on-surface mb-1">رسالة تشجيعية ودعاء للبطل الصغير (اختياري)</label>
+                <input type="text" id="donorMessage" placeholder="نسأل الله لك الشفاء العاجل يا بطلنا الغالي 💛" class="w-full px-4 py-2.5 rounded-xl bg-surface-container-low border border-outline-variant/40 focus:outline-none focus:border-primary text-sm"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Payment Methods Selection -->
+          <div class="flex flex-col gap-3 pt-4 border-t border-outline-variant/30">
+            <label class="text-sm font-bold text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[20px]">credit_card</span>
+              <span>طريقة الدفع:</span>
+            </label>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <label class="cursor-pointer p-3.5 rounded-2xl border-2 border-primary bg-primary-fixed/20 flex flex-col items-center justify-center gap-1.5 payment-opt active">
+                <input type="radio" name="paymentMethod" value="Mada" checked class="hidden"/>
+                <span class="text-sm font-bold text-on-surface">مدى Mada</span>
+                <span class="text-[10px] text-primary font-semibold">خصم مباشر</span>
+              </label>
+
+              <label class="cursor-pointer p-3.5 rounded-2xl border border-outline-variant/40 bg-surface-container-low flex flex-col items-center justify-center gap-1.5 payment-opt">
+                <input type="radio" name="paymentMethod" value="Apple Pay" class="hidden"/>
+                <span class="text-sm font-bold text-on-surface">Apple Pay</span>
+                <span class="text-[10px] text-on-surface-variant font-medium">دفع فوري</span>
+              </label>
+
+              <label class="cursor-pointer p-3.5 rounded-2xl border border-outline-variant/40 bg-surface-container-low flex flex-col items-center justify-center gap-1.5 payment-opt">
+                <input type="radio" name="paymentMethod" value="Visa" class="hidden"/>
+                <span class="text-sm font-bold text-on-surface">Visa / Mastercard</span>
+                <span class="text-[10px] text-on-surface-variant font-medium">بطاقة ائتمانية</span>
+              </label>
+
+              <label class="cursor-pointer p-3.5 rounded-2xl border border-outline-variant/40 bg-surface-container-low flex flex-col items-center justify-center gap-1.5 payment-opt">
+                <input type="radio" name="paymentMethod" value="STC Pay" class="hidden"/>
+                <span class="text-sm font-bold text-on-surface">STC Pay</span>
+                <span class="text-[10px] text-on-surface-variant font-medium">المحفظة الرقمية</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Action -->
+          <div class="flex flex-col gap-3 pt-2">
+            <button type="submit" id="submitDonationBtn" class="w-full py-4 rounded-2xl bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-extrabold text-lg shadow-xl hover:shadow-2xl transition-all transform active:scale-[0.99] flex items-center justify-center gap-3">
+              <span>تأكيد التبرع بمبلغ <span id="submitAmountDisplay">250</span> ر.س 💛</span>
+              <span class="material-symbols-outlined text-[24px]">lock</span>
+            </button>
+            <p class="text-center text-xs text-on-surface-variant flex items-center justify-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[16px]">verified</span>
+              <span>يتم توثيق تبرعك فوراً في قاعدة بيانات Cloud Firestore وإصدار إيصال إلكتروني رسمي</span>
+            </p>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SUCCESS RECEIPT MODAL -->
+  <div id="receiptModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+    <div class="relative w-full max-w-md bg-surface-container-lowest rounded-3xl p-6 lg:p-8 shadow-2xl modal-content flex flex-col items-center text-center gap-4">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[36px]">check_circle</span>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-bold text-on-surface">تقبل الله طاعتكم وصنيعكم 🌟</h3>
+        <p class="text-xs text-on-surface-variant mt-1">تم توثيق تبرعكم بنجاح في منصة نبض الأمل</p>
+      </div>
+
+      <div class="w-full bg-surface-container-low p-4 rounded-2xl flex flex-col gap-2 text-xs text-on-surface border border-outline-variant/30 text-right">
+        <div class="flex justify-between">
+          <span class="text-on-surface-variant">رقم العملية (Firestore ID):</span>
+          <span id="receiptId" class="font-mono font-bold text-primary">#don_123456</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-on-surface-variant">المبلغ المدفوع:</span>
+          <span id="receiptAmount" class="font-bold text-on-surface">250 ر.س</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-on-surface-variant">المستفيد:</span>
+          <span id="receiptHero" class="font-bold text-secondary">عام</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-on-surface-variant">وسيلة الدفع:</span>
+          <span id="receiptPayment" class="font-bold text-on-surface">Mada</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 w-full pt-2">
+        <a href="index.html" class="flex-1 py-3 rounded-xl bg-primary text-on-primary text-xs font-bold transition-all">
+          العودة للرئيسية
+        </a>
+        <a href="stories.html" class="flex-1 py-3 rounded-xl bg-surface-container-high text-on-surface text-xs font-bold transition-all">
+          قصص الأبطال
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto w-full bg-surface-container-low border-t border-outline-variant/20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">favorite</span>
+        <span class="text-xs text-on-surface-variant">جميع الحقوق محفوظة © 2026 مبادرة نبض الأمل لأطفال الغسيل الكلوي.</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-semibold text-primary">
+        <a href="index.html">الرئيسية</a>
+        <a href="stories.html">قصص الأبطال</a>
+        <a href="calculator.html">حاسبة التبرع</a>
+        <a href="partners.html">المستشفيات</a>
+        <a href="about.html">عن المبادرة</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-service.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    let checkoutAmount = 250;
+    let checkoutType = 'كفالة جلسة غسيل كاملة';
+    let checkoutFrequency = 'once';
+    let isAnonymous = false;
+
+    // Read URL params
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const urlAmount = Number(params.get('amount'));
+      const urlHero = params.get('hero');
+      const urlType = params.get('type');
+      const urlFreq = params.get('freq');
+
+      if (urlAmount && urlAmount > 0) {
+        checkoutAmount = urlAmount;
+        document.getElementById('checkoutCustomAmount').value = urlAmount;
+        document.querySelectorAll('.checkout-amount-btn').forEach(btn => btn.classList.remove('active', 'border-primary', 'bg-primary-fixed/30'));
+      }
+      if (urlType) {
+        checkoutType = urlType;
+      }
+      if (urlFreq) {
+        setCheckoutFrequency(urlFreq);
+      }
+      if (urlHero) {
+        const select = document.getElementById('donateTargetHero');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(urlHero) || select.options[i].text.includes(urlHero)) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      updateSubmitDisplay();
+
+      // Pre-fill user if logged in
+      if (window.hopeAuthService && window.hopeAuthService.currentUser) {
+        const u = window.hopeAuthService.currentUser;
+        if (u.displayName) document.getElementById('donorName').value = u.displayName;
+        if (u.email) document.getElementById('donorEmail').value = u.email;
+      }
+
+      // Payment method selection listeners
+      document.querySelectorAll('.payment-opt').forEach(opt => {
+        opt.addEventListener('click', () => {
+          document.querySelectorAll('.payment-opt').forEach(o => {
+            o.classList.remove('border-2', 'border-primary', 'bg-primary-fixed/20');
+            o.classList.add('border', 'border-outline-variant/40', 'bg-surface-container-low');
+          });
+          opt.classList.remove('border', 'border-outline-variant/40', 'bg-surface-container-low');
+          opt.classList.add('border-2', 'border-primary', 'bg-primary-fixed/20');
+          const radio = opt.querySelector('input[type="radio"]');
+          if (radio) radio.checked = true;
+        });
+      });
+    });
+
+    function setCheckoutFrequency(freq) {
+      checkoutFrequency = freq;
+      const bOnce = document.getElementById('btnCheckoutOnce');
+      const bMonthly = document.getElementById('btnCheckoutMonthly');
+      if (freq === 'once') {
+        bOnce.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        bOnce.classList.remove('text-on-surface-variant');
+        bMonthly.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        bMonthly.classList.add('text-on-surface-variant');
+      } else {
+        bMonthly.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        bMonthly.classList.remove('text-on-surface-variant');
+        bOnce.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        bOnce.classList.add('text-on-surface-variant');
+      }
+    }
+
+    function setCheckoutAmount(amount, btn, typeDesc) {
+      checkoutAmount = amount;
+      checkoutType = typeDesc || 'تبرع';
+      document.getElementById('checkoutCustomAmount').value = '';
+
+      document.querySelectorAll('.checkout-amount-btn').forEach(b => {
+        b.classList.remove('active', 'border-primary', 'bg-primary-fixed/30');
+        b.classList.add('border-outline-variant/30', 'bg-surface-container-low');
+      });
+      btn.classList.add('active', 'border-primary', 'bg-primary-fixed/30');
+      btn.classList.remove('border-outline-variant/30', 'bg-surface-container-low');
+
+      updateSubmitDisplay();
+    }
+
+    function onCheckoutCustomAmount(input) {
+      const val = Number(input.value);
+      if (val > 0) {
+        checkoutAmount = val;
+        checkoutType = 'تبرع حر مخصص';
+        document.querySelectorAll('.checkout-amount-btn').forEach(b => {
+          b.classList.remove('active', 'border-primary', 'bg-primary-fixed/30');
+        });
+        updateSubmitDisplay();
+      }
+    }
+
+    function updateSubmitDisplay() {
+      const display = document.getElementById('submitAmountDisplay');
+      if (display) display.textContent = checkoutAmount.toLocaleString('ar-SA');
+    }
+
+    function toggleAnonymous(checkbox) {
+      isAnonymous = checkbox.checked;
+      const nameContainer = document.getElementById('donorNameContainer');
+      const nameInput = document.getElementById('donorName');
+      if (isAnonymous) {
+        nameInput.value = 'فاعل خير';
+        nameInput.readOnly = true;
+        nameContainer.style.opacity = '0.6';
+      } else {
+        nameInput.value = '';
+        nameInput.readOnly = false;
+        nameContainer.style.opacity = '1';
+      }
+    }
+
+    async function handleDonationSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitDonationBtn');
+      btn.disabled = true;
+      btn.innerText = 'جاري المعالجة والتوثيق الآمن في Firebase...';
+
+      const paymentInput = document.querySelector('input[name="paymentMethod"]:checked');
+      const paymentMethod = paymentInput ? paymentInput.value : 'Mada';
+
+      const payload = {
+        donorName: isAnonymous ? 'فاعل خير' : document.getElementById('donorName').value.trim(),
+        donorEmail: document.getElementById('donorEmail').value.trim(),
+        amount: checkoutAmount,
+        type: checkoutType,
+        frequency: checkoutFrequency,
+        targetHero: document.getElementById('donateTargetHero').value,
+        message: document.getElementById('donorMessage').value.trim(),
+        paymentMethod: paymentMethod
+      };
+
+      try {
+        const res = await window.hopeDataService.createDonation(payload);
+        if (res.success) {
+          window.showToast(`شكراً لك! تم استلام تبرعك بقيمة ${checkoutAmount} ر.س بنجاح 💛`, 'success');
+          
+          // Show receipt modal
+          document.getElementById('receiptId').textContent = '#' + res.id.slice(-8);
+          document.getElementById('receiptAmount').textContent = `${checkoutAmount} ريال سعودي`;
+          document.getElementById('receiptHero').textContent = payload.targetHero;
+          document.getElementById('receiptPayment').textContent = paymentMethod;
+
+          document.getElementById('receiptModal').classList.remove('hidden');
+        } else {
+          window.showToast('تعذر إتمام العملية، يرجى المحاولة لاحقاً', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        window.showToast('حدث خطأ أثناء معالجة التبرع', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>تأكيد التبرع بمبلغ <span id="submitAmountDisplay">${checkoutAmount}</span> ر.س 💛</span><span class="material-symbols-outlined text-[24px]">lock</span>`;
+      }
+    }
+  </script>
+
+</body>
+</html>

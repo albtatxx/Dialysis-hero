@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>قصص وأحلام الأبطال | نبض الأمل</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#00685f",
+            "primary-container": "#008378",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#f4fffc",
+            "primary-fixed": "#89f5e7",
+            "on-primary-fixed-variant": "#005049",
+            "secondary": "#855300",
+            "secondary-container": "#fea619",
+            "on-secondary-container": "#684000",
+            "secondary-fixed": "#ffddb8",
+            "tertiary": "#b90538",
+            "tertiary-container": "#dc2c4f",
+            "on-tertiary": "#ffffff",
+            "surface": "#fbf9f5",
+            "surface-bright": "#fbf9f5",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f5f3ef",
+            "surface-container": "#efeeea",
+            "surface-container-high": "#eae8e4",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#3d4947",
+            "outline": "#6d7a77",
+            "outline-variant": "#bcc9c6",
+            "error": "#ba1a1a"
+          },
+          fontFamily: {
+            sans: ["Readex Pro", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  
+  <!-- Custom Project Stylesheet -->
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+  <!-- NAVIGATION HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(28,25,23,0.05)] border-b border-outline-variant/30">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4">
+      
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-full bg-secondary-fixed flex items-center justify-center text-primary shadow-[0_2px_8px_rgba(254,166,25,0.25)] group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-[26px]">favorite</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold text-primary tracking-tight">نبض الأمل</span>
+          <span class="text-xs text-secondary font-medium">لأطفال الغسيل الكلوي</span>
+        </div>
+      </a>
+
+      <nav class="hidden xl:flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/20">
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="home" href="index.html">الرئيسية</a>
+        <a class="px-4 py-2 transition-all rounded-full text-sm font-semibold" data-path="heroes-stories" href="stories.html">قصص وأحلام الأبطال</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="donation-calculator" href="calculator.html">حاسبة التبرع والكفالة</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="partners-and-hospitals" href="partners.html">شراكات ومستشفيات</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="about-initiative" href="about.html">عن المبادرة</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a class="inline-flex items-center gap-2 bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container px-5 py-2.5 rounded-full text-sm font-bold shadow-[0_4px_16px_rgba(254,166,25,0.3)] transition-all hover:scale-105 active:scale-95" data-path="quick-donate" href="donate.html">
+          <span>تبرّع الآن</span>
+          <span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+        </a>
+        <div class="user-profile-widget flex items-center"></div>
+        <button id="mobileMenuToggle" type="button" class="xl:hidden p-2.5 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors" aria-label="القائمة">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Drawer & Overlay -->
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/40 z-50 hidden backdrop-blur-sm transition-opacity"></div>
+  <div id="mobileDrawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-surface-container-lowest z-50 p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 translate-x-full">
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between border-b border-outline-variant/30 pb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-[20px]">favorite</span>
+          </div>
+          <span class="text-base text-primary font-bold">نبض الأمل</span>
+        </div>
+        <button id="mobileDrawerClose" type="button" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant">
+          <span class="material-symbols-outlined text-[22px]">close</span>
+        </button>
+      </div>
+      
+      <nav class="flex flex-col gap-1.5">
+        <a href="index.html" data-path="home" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-primary">home</span>
+          <span>الرئيسية</span>
+        </a>
+        <a href="stories.html" data-path="heroes-stories" class="px-4 py-3 rounded-2xl text-sm font-semibold text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-primary">auto_stories</span>
+          <span>قصص وأحلام الأبطال</span>
+        </a>
+        <a href="calculator.html" data-path="donation-calculator" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-primary">calculate</span>
+          <span>حاسبة التبرع والكفالة</span>
+        </a>
+        <a href="partners.html" data-path="partners-and-hospitals" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-primary">apartment</span>
+          <span>شراكات ومستشفيات</span>
+        </a>
+        <a href="about.html" data-path="about-initiative" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-primary">info</span>
+          <span>عن المبادرة</span>
+        </a>
+      </nav>
+    </div>
+    
+    <div class="flex flex-col gap-3 pt-6 border-t border-outline-variant/30">
+      <a href="donate.html" class="w-full py-3.5 rounded-full bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-bold text-center flex items-center justify-center gap-2 shadow-md">
+        <span>تبرّع الآن</span>
+        <span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="w-full pt-28 pb-20 bg-surface min-h-screen">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col gap-12">
+      
+      <!-- Page Header -->
+      <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-4">
+        <span class="px-4 py-1.5 rounded-full bg-secondary-fixed text-secondary font-bold text-xs uppercase tracking-wider">
+          أبطالنا الصغار • إشراقات أمل
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-on-surface leading-tight">
+          قصص أبطال يتحدون الغسيل الكلوي بابتسامة وعزيمة
+        </h1>
+        <p class="text-base text-on-surface-variant leading-relaxed">
+          وراء كل رقم في تقاريرنا، طفل يحمل أحلاماً تلامس السماء. بدعمك المستمر نؤمن جلساتهم الطبية الدورية ونوفر بيئة تفاعلية تملأ قلوبهم بهجة وأملاً.
+        </p>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+          <button onclick="filterStories('all', this)" class="filter-btn active px-4 py-2 rounded-full text-xs font-bold bg-primary text-on-primary shadow-sm transition-all">الكل (6 أبطال)</button>
+          <button onclick="filterStories('urgent', this)" class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-all">حالات عاجلة ⚡</button>
+          <button onclick="filterStories('almost', this)" class="filter-btn px-4 py-2 rounded-full text-xs font-bold bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-all">شارفت على الاكتمال</button>
+        </div>
+      </div>
+
+      <!-- Heroes Stories Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Hero 1: Sarah -->
+        <div class="story-card bg-surface-container-lowest rounded-3xl p-6 shadow-md border border-outline-variant/30 flex flex-col justify-between hover:shadow-xl transition-all" data-category="urgent">
+          <div class="flex flex-col gap-4">
+            <div class="relative h-56 rounded-2xl overflow-hidden bg-primary-fixed/20">
+              <img src="https://images.unsplash.com/photo-1595454223600-91fbdd77e58a?w=600&auto=format&fit=crop&q=80" alt="الطفلة سارة" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">
+                8 سنوات • الرياض
+              </span>
+              <span class="absolute bottom-3 left-3 bg-tertiary text-on-tertiary px-3 py-1 rounded-full text-xs font-bold">
+                عاجل: متبقي 3 جلسات
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-on-surface">سارة: ريشة فنانة وأمل ينبض بالألوان</h3>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                تقضي سارة 12 ساعة أسبوعياً في وحدة غسيل الأطفال بمستشفى الأمير سلطان. أمنيتها الكبرى أن تصبح رسامة ديكور لترسم منازل ملونة للأطفال المرضى لتسعد قلوبهم.
+              </p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="bg-surface-container-low p-3.5 rounded-2xl flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-on-surface">الجلسات المكفولة هذا الشهر:</span>
+                <span class="text-primary font-bold">9 من 12 جلسة (75%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width: 75%"></div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant">تكلفة استكمال الشهر: 750 ر.س</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-outline-variant/30 flex items-center justify-between">
+            <span class="text-xs font-semibold text-secondary">كفالة الجلسة: 250 ر.س</span>
+            <a href="donate.html?hero=سارة&amount=250" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow transition-all">
+              اكفل جلسة لسارة 💛
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero 2: Omar -->
+        <div class="story-card bg-surface-container-lowest rounded-3xl p-6 shadow-md border border-outline-variant/30 flex flex-col justify-between hover:shadow-xl transition-all" data-category="almost">
+          <div class="flex flex-col gap-4">
+            <div class="relative h-56 rounded-2xl overflow-hidden bg-secondary-fixed/20">
+              <img src="https://images.unsplash.com/photo-1543332164-6e82f355badc?w=600&auto=format&fit=crop&q=80" alt="الطفل عمر" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">
+                10 سنوات • جدة
+              </span>
+              <span class="absolute bottom-3 left-3 bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                شارف على الاكتمال
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-on-surface">عمر: مهندس المستقبل وروبوتات الشفاء</h3>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                عمر مولع بقطع الليجو وتركيب الروبوتات الذكية. يدرس دروس الرياضيات عبر جهازه اللوحي المهدى من المبادرة أثناء جلسات التنقية ويحافظ على تفوقه الدراسي بامتياز!
+              </p>
+            </div>
+
+            <div class="bg-surface-container-low p-3.5 rounded-2xl flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-on-surface">الجلسات المكفولة هذا الشهر:</span>
+                <span class="text-secondary font-bold">11 من 12 جلسة (91%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-secondary-container rounded-full" style="width: 91%"></div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant">متبقي جلسة واحدة فقط لاكتمال شهره!</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-outline-variant/30 flex items-center justify-between">
+            <span class="text-xs font-semibold text-secondary">المتبقي: 250 ر.س</span>
+            <a href="donate.html?hero=عمر&amount=250" class="px-5 py-2.5 rounded-xl bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container text-xs font-bold shadow transition-all">
+              أكمل كفالة عمر 🌟
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero 3: Fatima -->
+        <div class="story-card bg-surface-container-lowest rounded-3xl p-6 shadow-md border border-outline-variant/30 flex flex-col justify-between hover:shadow-xl transition-all" data-category="urgent">
+          <div class="flex flex-col gap-4">
+            <div class="relative h-56 rounded-2xl overflow-hidden bg-primary-fixed/20">
+              <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80" alt="الطفلة فاطمة" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">
+                11 سنة • مكة المكرمة
+              </span>
+              <span class="absolute bottom-3 left-3 bg-tertiary text-on-tertiary px-3 py-1 rounded-full text-xs font-bold">
+                عاجل جداً
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-on-surface">فاطمة: طبيبة الغد المخلصة</h3>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                تقول فاطمة: "أريد أن أدرس طب الأطفال لأخترع علاجاً سهلاً للكلى بدون إبر!". تمر بظروف أسرية صعبة وبحاجة ماسة لتأمين جلساتها الطبية مع حقائب التغذية الوريدية.
+              </p>
+            </div>
+
+            <div class="bg-surface-container-low p-3.5 rounded-2xl flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-on-surface">الجلسات المكفولة هذا الشهر:</span>
+                <span class="text-tertiary font-bold">5 من 12 جلسة (41%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-tertiary rounded-full" style="width: 41%"></div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant">متبقي 7 جلسات عاجلة (1,750 ر.س)</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-outline-variant/30 flex items-center justify-between">
+            <span class="text-xs font-semibold text-tertiary">مستعجل ⚡</span>
+            <a href="donate.html?hero=فاطمة&amount=250" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow transition-all">
+              اكفل جلسة لفاطمة 🌸
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero 4: Rayan -->
+        <div class="story-card bg-surface-container-lowest rounded-3xl p-6 shadow-md border border-outline-variant/30 flex flex-col justify-between hover:shadow-xl transition-all" data-category="urgent">
+          <div class="flex flex-col gap-4">
+            <div class="relative h-56 rounded-2xl overflow-hidden bg-primary-fixed/20">
+              <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&auto=format&fit=crop&q=80" alt="الطفل ريان" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">
+                6 سنوات • الدمام
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-on-surface">ريان: البطل الخارق وضحكته التي تضيء القسم</h3>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                ريان يبهج طاقم التمريض كل زيارة بارتداء قناع الأبطال الخارقين. سلة الألعاب والقصص تخفف عنه وحشة ساعات الغسيل الطويلة وتجعله ينتظر الجلسة بحماس.
+              </p>
+            </div>
+
+            <div class="bg-surface-container-low p-3.5 rounded-2xl flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-on-surface">الجلسات المكفولة هذا الشهر:</span>
+                <span class="text-primary font-bold">8 من 12 جلسة (66%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width: 66%"></div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant">متبقي 4 جلسات (1,000 ر.س)</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-outline-variant/30 flex items-center justify-between">
+            <span class="text-xs font-semibold text-secondary">كفالة الجلسة: 250 ر.س</span>
+            <a href="donate.html?hero=ريان&amount=250" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow transition-all">
+              اكفل جلسة لريان 🦸‍♂️
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero 5: Youssef -->
+        <div class="story-card bg-surface-container-lowest rounded-3xl p-6 shadow-md border border-outline-variant/30 flex flex-col justify-between hover:shadow-xl transition-all" data-category="almost">
+          <div class="flex flex-col gap-4">
+            <div class="relative h-56 rounded-2xl overflow-hidden bg-secondary-fixed/20">
+              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80" alt="الطفل يوسف" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">
+                9 سنوات • أبها
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-on-surface">يوسف: رائد الفضاء الصغير</h3>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                يوسف يعشق علوم الفضاء وتلسكوبات النجوم. بفضل دعم الكافلين، تم تأمين جهاز لوحي يعرض له وثائقيات الكواكب أثناء الساعات الأربع للتنقية، مما يحفز عزيمته.
+              </p>
+            </div>
+
+            <div class="bg-surface-container-low p-3.5 rounded-2xl flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-on-surface">الجلسات المكفولة هذا الشهر:</span>
+                <span class="text-secondary font-bold">10 من 12 جلسة (83%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-secondary-container rounded-full" style="width: 83%"></div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant">متبقي جلستان فقط (500 ر.س)</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-outline-variant/30 flex items-center justify-between">
+            <span class="text-xs font-semibold text-secondary">المتبقي: 500 ر.س</span>
+            <a href="donate.html?hero=يوسف&amount=250" class="px-5 py-2.5 rounded-xl bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container text-xs font-bold shadow transition-all">
+              اكفل جلسة ليوسف 🚀
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero 6: Jude -->
+        <div class="story-card bg-surface-container-lowest rounded-3xl p-6 shadow-md border border-outline-variant/30 flex flex-col justify-between hover:shadow-xl transition-all" data-category="urgent">
+          <div class="flex flex-col gap-4">
+            <div class="relative h-56 rounded-2xl overflow-hidden bg-primary-fixed/20">
+              <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=600&auto=format&fit=crop&q=80" alt="الطفلة جود" class="w-full h-full object-cover">
+              <span class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary">
+                7 سنوات • الطائف
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-bold text-on-surface">جود: كاتبة القصص وبطلة الصبر</h3>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                تؤلف جود قصصاً خيالية عن قطرات الماء النقية التي تزور الجسم وتنظفه ليعود أقوى. تبتسم بشجاعة وتساعد زميلاتها في القسم على عدم الخوف من صوت الأجهزة.
+              </p>
+            </div>
+
+            <div class="bg-surface-container-low p-3.5 rounded-2xl flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-on-surface">الجلسات المكفولة هذا الشهر:</span>
+                <span class="text-primary font-bold">7 من 12 جلسة (58%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width: 58%"></div>
+              </div>
+              <span class="text-[11px] text-on-surface-variant">متبقي 5 جلسات (1,250 ر.س)</span>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-outline-variant/30 flex items-center justify-between">
+            <span class="text-xs font-semibold text-secondary">كفالة الجلسة: 250 ر.س</span>
+            <a href="donate.html?hero=جود&amount=250" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow transition-all">
+              اكفل جلسة لجود 💖
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto w-full bg-surface-container-low border-t border-outline-variant/20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12">
+        <div class="lg:col-span-4 flex flex-col gap-4">
+          <a href="index.html" class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">favorite</span>
+            </div>
+            <span class="text-xl font-bold text-primary">نبض الأمل</span>
+          </a>
+          <p class="text-sm text-on-surface-variant leading-relaxed">
+            منصة إنسانية رقمية متخصصة في كفالة جلسات الغسيل الكلوي ورعاية الأطفال المحاربين في المشافي المعتمدة، نزرع الأمل ونكفل الشفاء يداً بيد وبأعلى معايير الشفافية المالية.
+          </p>
+        </div>
+
+        <div class="lg:col-span-3 flex flex-col gap-3">
+          <span class="text-base font-bold text-on-surface mb-1">الصفحات والأقسام</span>
+          <ul class="flex flex-col gap-2.5 text-sm">
+            <li><a href="index.html" class="text-on-surface-variant hover:text-primary">الرئيسية</a></li>
+            <li><a href="stories.html" class="text-primary font-bold">قصص وأحلام الأبطال</a></li>
+            <li><a href="calculator.html" class="text-on-surface-variant hover:text-primary">حاسبة التبرع والكفالة</a></li>
+            <li><a href="partners.html" class="text-on-surface-variant hover:text-primary">شراكات ومستشفيات</a></li>
+            <li><a href="about.html" class="text-on-surface-variant hover:text-primary">عن المبادرة</a></li>
+            <li><a href="donate.html" class="text-on-surface-variant hover:text-primary">صندوق التبرع الفوري</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2 flex flex-col gap-3 text-sm text-on-surface-variant">
+          <span class="text-base font-bold text-on-surface mb-1">الشفافية والحوكمة</span>
+          <ul class="flex flex-col gap-2">
+            <li>تقارير المدقق المستقل</li>
+            <li>لوحة مؤشرات التبرع الحيّة</li>
+            <li>ميثاق حماية الأطفال</li>
+            <li>المستشفيات المعتمدة</li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-3 flex flex-col gap-4">
+          <span class="text-base font-bold text-on-surface">نشرة أبطال نبض الأمل</span>
+          <p class="text-sm text-on-surface-variant">
+            اشترك لتصلك قصص التعافي الحية وتفاصيل أثر مساهمتك الطيبة شهرياً.
+          </p>
+          <form class="footer-newsletter-form flex flex-col gap-2">
+            <div class="flex items-center bg-surface-container-lowest rounded-full p-1.5 shadow-sm border border-outline-variant/40">
+              <input class="w-full bg-transparent px-4 text-sm text-on-surface placeholder:text-outline focus:outline-none" placeholder="بريدك الإلكتروني..." type="email" required/>
+              <button class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2 rounded-full text-xs font-semibold" type="submit">اشتراك</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-surface-container/60 px-6 py-4 rounded-2xl">
+        <span class="text-xs text-on-surface-variant">جميع الحقوق محفوظة © 2026 مبادرة نبض الأمل لأطفال الغسيل الكلوي.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-service.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    function filterStories(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('bg-primary', 'text-on-primary');
+        b.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+      });
+      btn.classList.add('bg-primary', 'text-on-primary');
+      btn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+
+      const cards = document.querySelectorAll('.story-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

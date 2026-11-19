@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>حاسبة التبرع والكفالة | نبض الأمل</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#00685f",
+            "primary-container": "#008378",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#f4fffc",
+            "primary-fixed": "#89f5e7",
+            "secondary": "#855300",
+            "secondary-container": "#fea619",
+            "on-secondary-container": "#684000",
+            "secondary-fixed": "#ffddb8",
+            "tertiary": "#b90538",
+            "surface": "#fbf9f5",
+            "surface-bright": "#fbf9f5",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f5f3ef",
+            "surface-container": "#efeeea",
+            "surface-container-high": "#eae8e4",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#3d4947",
+            "outline": "#6d7a77",
+            "outline-variant": "#bcc9c6"
+          },
+          fontFamily: {
+            sans: ["Readex Pro", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(28,25,23,0.05)] border-b border-outline-variant/30">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-full bg-secondary-fixed flex items-center justify-center text-primary shadow-[0_2px_8px_rgba(254,166,25,0.25)] group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-[26px]">favorite</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold text-primary tracking-tight">نبض الأمل</span>
+          <span class="text-xs text-secondary font-medium">لأطفال الغسيل الكلوي</span>
+        </div>
+      </a>
+
+      <nav class="hidden xl:flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/20">
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="home" href="index.html">الرئيسية</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="heroes-stories" href="stories.html">قصص وأحلام الأبطال</a>
+        <a class="px-4 py-2 transition-all rounded-full text-sm font-semibold" data-path="donation-calculator" href="calculator.html">حاسبة التبرع والكفالة</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="partners-and-hospitals" href="partners.html">شراكات ومستشفيات</a>
+        <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" data-path="about-initiative" href="about.html">عن المبادرة</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a class="inline-flex items-center gap-2 bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container px-5 py-2.5 rounded-full text-sm font-bold shadow-[0_4px_16px_rgba(254,166,25,0.3)] transition-all hover:scale-105 active:scale-95" data-path="quick-donate" href="donate.html">
+          <span>تبرّع الآن</span>
+          <span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+        </a>
+        <div class="user-profile-widget flex items-center"></div>
+        <button id="mobileMenuToggle" type="button" class="xl:hidden p-2.5 rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/40 z-50 hidden backdrop-blur-sm transition-opacity"></div>
+  <div id="mobileDrawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-surface-container-lowest z-50 p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 translate-x-full">
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between border-b border-outline-variant/30 pb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-[20px]">favorite</span>
+          </div>
+          <span class="text-base text-primary font-bold">نبض الأمل</span>
+        </div>
+        <button id="mobileDrawerClose" type="button" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant">
+          <span class="material-symbols-outlined text-[22px]">close</span>
+        </button>
+      </div>
+      <nav class="flex flex-col gap-1.5">
+        <a href="index.html" data-path="home" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">الرئيسية</a>
+        <a href="stories.html" data-path="heroes-stories" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">قصص وأحلام الأبطال</a>
+        <a href="calculator.html" data-path="donation-calculator" class="px-4 py-3 rounded-2xl text-sm font-semibold text-on-surface-variant hover:bg-surface-container transition-colors">حاسبة التبرع والكفالة</a>
+        <a href="partners.html" data-path="partners-and-hospitals" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">شراكات ومستشفيات</a>
+        <a href="about.html" data-path="about-initiative" class="px-4 py-3 rounded-2xl text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors">عن المبادرة</a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-outline-variant/30">
+      <a href="donate.html" class="w-full py-3.5 rounded-full bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-bold text-center block">تبرّع الآن 💛</a>
+    </div>
+  </div>
+
+  <!-- MAIN CALCULATOR -->
+  <main class="w-full pt-28 pb-20 bg-surface min-h-screen">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col gap-10">
+      
+      <!-- Header Info -->
+      <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-3">
+        <span class="px-4 py-1.5 rounded-full bg-primary-fixed/50 text-on-primary-fixed-variant font-bold text-xs">
+          أداة التخطيط وحساب الأثر
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-on-surface leading-tight">
+          حاسبة كفالة جلسات الغسيل الكلوي التفاعلية
+        </h1>
+        <p class="text-sm md:text-base text-on-surface-variant leading-relaxed">
+          خصص مساهمتك الطيبة واكتشف فوراً حجم الأثر الواقعي الذي تصنعه في حياة أطفالنا الأبطال. كل ريال موجه مباشرة لدعم جلساتهم وأدواتهم الطبية والتعليمية.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls Column (7 cols) -->
+        <div class="lg:col-span-7 bg-surface-container-lowest p-6 lg:p-8 rounded-3xl shadow-xl border border-outline-variant/30 flex flex-col gap-6">
+          
+          <!-- Donation Frequency Selector -->
+          <div class="flex flex-col gap-2">
+            <span class="text-xs font-bold text-on-surface">نوع الالتزام:</span>
+            <div class="grid grid-cols-2 p-1 rounded-2xl bg-surface-container-low text-xs font-semibold">
+              <button id="calcFreqOnce" type="button" onclick="setCalcFrequency('once')" class="py-3 rounded-xl bg-surface-container-lowest text-primary font-bold shadow-sm text-center transition-all">
+                تبرع لمرة واحدة
+              </button>
+              <button id="calcFreqMonthly" type="button" onclick="setCalcFrequency('monthly')" class="py-3 rounded-xl text-on-surface-variant hover:text-on-surface text-center transition-all">
+                كفالة مستمرة شهرياً
+              </button>
+            </div>
+          </div>
+
+          <!-- Slider 1: Sessions Count -->
+          <div class="flex flex-col gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">medical_services</span>
+                </span>
+                <div>
+                  <h3 class="text-sm font-bold text-on-surface">جلسات غسيل كلوي كاملة</h3>
+                  <p class="text-xs text-on-surface-variant">250 ر.س / جلسة (فلاتر ومستلزمات وتمريض)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="adjustCount('sessions', -1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-white transition-all shadow-sm">-</button>
+                <span id="sessionsDisplay" class="w-8 text-center font-bold text-primary text-base">2</span>
+                <button type="button" onclick="adjustCount('sessions', 1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-white transition-all shadow-sm">+</button>
+              </div>
+            </div>
+            <input id="sessionsRange" type="range" min="0" max="20" value="2" oninput="onRangeChange('sessions', this.value)" class="w-full cursor-pointer"/>
+          </div>
+
+          <!-- Slider 2: Medical Filters & Tubing Kits -->
+          <div class="flex flex-col gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">filter_alt</span>
+                </span>
+                <div>
+                  <h3 class="text-sm font-bold text-on-surface">فلاتر وأنابيب تنقية معقمة</h3>
+                  <p class="text-xs text-on-surface-variant">150 ر.س / طقم فلتر معقم</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="adjustCount('filters', -1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm">-</button>
+                <span id="filtersDisplay" class="w-8 text-center font-bold text-secondary text-base">1</span>
+                <button type="button" onclick="adjustCount('filters', 1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm">+</button>
+              </div>
+            </div>
+            <input id="filtersRange" type="range" min="0" max="15" value="1" oninput="onRangeChange('filters', this.value)" class="w-full cursor-pointer"/>
+          </div>
+
+          <!-- Slider 3: Toys & Activity Boxes -->
+          <div class="flex flex-col gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-tertiary/10 text-tertiary flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">palette</span>
+                </span>
+                <div>
+                  <h3 class="text-sm font-bold text-on-surface">حقائب ألعاب ورسم أثناء الجلسة</h3>
+                  <p class="text-xs text-on-surface-variant">100 ر.س / حقيبة تخفف وحشة الـ 4 ساعات</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="adjustCount('toys', -1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-tertiary hover:bg-tertiary hover:text-white transition-all shadow-sm">-</button>
+                <span id="toysDisplay" class="w-8 text-center font-bold text-tertiary text-base">1</span>
+                <button type="button" onclick="adjustCount('toys', 1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-tertiary hover:bg-tertiary hover:text-white transition-all shadow-sm">+</button>
+              </div>
+            </div>
+            <input id="toysRange" type="range" min="0" max="10" value="1" oninput="onRangeChange('toys', this.value)" class="w-full cursor-pointer"/>
+          </div>
+
+          <!-- Slider 4: Nutritional Supplements -->
+          <div class="flex flex-col gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">nutrition</span>
+                </span>
+                <div>
+                  <h3 class="text-sm font-bold text-on-surface">سلات التغذية الوريدية لمرضى الكلى</h3>
+                  <p class="text-xs text-on-surface-variant">80 ر.س / سلة فيتامينات متخصصة</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="adjustCount('nutrition', -1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-emerald-700 hover:bg-emerald-700 hover:text-white transition-all shadow-sm">-</button>
+                <span id="nutritionDisplay" class="w-8 text-center font-bold text-emerald-700 text-base">0</span>
+                <button type="button" onclick="adjustCount('nutrition', 1)" class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-emerald-700 hover:bg-emerald-700 hover:text-white transition-all shadow-sm">+</button>
+              </div>
+            </div>
+            <input id="nutritionRange" type="range" min="0" max="10" value="0" oninput="onRangeChange('nutrition', this.value)" class="w-full cursor-pointer"/>
+          </div>
+
+        </div>
+
+        <!-- Summary & Impact Card (5 cols) -->
+        <div class="lg:col-span-5 bg-surface-container-lowest p-6 lg:p-8 rounded-3xl shadow-xl border-2 border-primary/20 flex flex-col gap-6 sticky top-28">
+          
+          <div class="flex items-center justify-between border-b border-outline-variant/30 pb-4">
+            <span class="text-sm font-bold text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary">analytics</span>
+              ملخص الأثر المالي والإنساني
+            </span>
+            <span id="freqBadge" class="bg-primary-fixed/40 text-on-primary-fixed-variant text-xs font-bold px-3 py-1 rounded-full">
+              مرة واحدة
+            </span>
+          </div>
+
+          <!-- Total Calculation Display -->
+          <div class="flex flex-col items-center justify-center p-6 rounded-2xl bg-gradient-to-br from-surface-container-low to-primary-fixed/20 border border-primary/20 text-center">
+            <span class="text-xs text-on-surface-variant font-medium">إجمالي قيمة المساهمة</span>
+            <div class="flex items-baseline gap-2 mt-2">
+              <span id="calcTotalAmount" class="text-4xl md:text-5xl font-black text-primary">750</span>
+              <span class="text-base font-bold text-on-surface">ريال سعودي</span>
+            </div>
+            <span id="freqSubtext" class="text-xs text-secondary font-semibold mt-1">دفعة فورية لمرة واحدة</span>
+          </div>
+
+          <!-- Human Impact Indicators -->
+          <div class="flex flex-col gap-3">
+            <span class="text-xs font-bold text-on-surface">الأثر الإنساني الذي تصنعه اليوم:</span>
+            
+            <div class="grid grid-cols-2 gap-3 text-center">
+              <div class="p-3 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+                <span class="material-symbols-outlined text-primary text-[24px]">timer</span>
+                <div id="impactHours" class="text-lg font-bold text-on-surface mt-1">8 ساعات</div>
+                <span class="text-[11px] text-on-surface-variant">تنقية وشفاء مؤمنة</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+                <span class="material-symbols-outlined text-secondary text-[24px]">sentiment_very_satisfied</span>
+                <div id="impactSmiles" class="text-lg font-bold text-on-surface mt-1">2 أطفال</div>
+                <span class="text-[11px] text-on-surface-variant">مستفيدين برعاية شاملة</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Breakdown list -->
+          <div class="flex flex-col gap-2 pt-2 border-t border-outline-variant/30 text-xs text-on-surface-variant">
+            <div class="flex justify-between">
+              <span>جلسات الغسيل:</span>
+              <span id="breakdownSessions" class="font-bold text-on-surface">500 ر.س (2 جلسة)</span>
+            </div>
+            <div class="flex justify-between">
+              <span>الفلاتر والأطقم:</span>
+              <span id="breakdownFilters" class="font-bold text-on-surface">150 ر.س (1 طقم)</span>
+            </div>
+            <div class="flex justify-between">
+              <span>حقائب الرسم والألعاب:</span>
+              <span id="breakdownToys" class="font-bold text-on-surface">100 ر.س (1 حقيبة)</span>
+            </div>
+            <div class="flex justify-between">
+              <span>الدعم الغذائي:</span>
+              <span id="breakdownNutrition" class="font-bold text-on-surface">0 ر.س</span>
+            </div>
+          </div>
+
+          <!-- Proceed to Checkout -->
+          <button type="button" onclick="proceedFromCalculator()" class="w-full py-4 rounded-2xl bg-secondary-container hover:bg-secondary-fixed text-on-secondary-container font-bold text-base shadow-lg hover:shadow-xl transition-all transform active:scale-[0.99] flex items-center justify-center gap-3">
+            <span>المتابعة للتبرع بهذا المبلغ 💛</span>
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto w-full bg-surface-container-low border-t border-outline-variant/20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">favorite</span>
+        <span class="text-xs text-on-surface-variant">جميع الحقوق محفوظة © 2026 مبادرة نبض الأمل لأطفال الغسيل الكلوي.</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-semibold text-primary">
+        <a href="index.html">الرئيسية</a>
+        <a href="stories.html">قصص الأبطال</a>
+        <a href="partners.html">المستشفيات</a>
+        <a href="about.html">عن المبادرة</a>
+        <a href="donate.html">تبرع الآن</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-service.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Interactive Calculator Logic -->
+  <script>
+    const state = {
+      sessions: 2,
+      filters: 1,
+      toys: 1,
+      nutrition: 0,
+      frequency: 'once'
+    };
+
+    const COSTS = {
+      sessions: 250,
+      filters: 150,
+      toys: 100,
+      nutrition: 80
+    };
+
+    function setCalcFrequency(freq) {
+      state.frequency = freq;
+      const btnOnce = document.getElementById('calcFreqOnce');
+      const btnMonthly = document.getElementById('calcFreqMonthly');
+      const badge = document.getElementById('freqBadge');
+      const subtext = document.getElementById('freqSubtext');
+
+      if (freq === 'once') {
+        btnOnce.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        btnOnce.classList.remove('text-on-surface-variant');
+        btnMonthly.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        btnMonthly.classList.add('text-on-surface-variant');
+        if (badge) badge.textContent = 'مرة واحدة';
+        if (subtext) subtext.textContent = 'دفعة فورية لمرة واحدة';
+      } else {
+        btnMonthly.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        btnMonthly.classList.remove('text-on-surface-variant');
+        btnOnce.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        btnOnce.classList.add('text-on-surface-variant');
+        if (badge) badge.textContent = 'استقطاع شهري';
+        if (subtext) subtext.textContent = 'كفالة مستمرة تتجدد شهرياً';
+      }
+      recalculate();
+    }
+
+    function adjustCount(item, delta) {
+      const maxLimits = { sessions: 20, filters: 15, toys: 10, nutrition: 10 };
+      const current = state[item];
+      const next = Math.max(0, Math.min(maxLimits[item], current + delta));
+      state[item] = next;
+      
+      const rangeEl = document.getElementById(`${item}Range`);
+      if (rangeEl) rangeEl.value = next;
+      recalculate();
+    }
+
+    function onRangeChange(item, val) {
+      state[item] = Number(val);
+      recalculate();
+    }
+
+    function recalculate() {
+      // Update displays
+      document.getElementById('sessionsDisplay').textContent = state.sessions;
+      document.getElementById('filtersDisplay').textContent = state.filters;
+      document.getElementById('toysDisplay').textContent = state.toys;
+      document.getElementById('nutritionDisplay').textContent = state.nutrition;
+
+      // Calculate totals
+      const sessionsTotal = state.sessions * COSTS.sessions;
+      const filtersTotal = state.filters * COSTS.filters;
+      const toysTotal = state.toys * COSTS.toys;
+      const nutritionTotal = state.nutrition * COSTS.nutrition;
+
+      const grandTotal = sessionsTotal + filtersTotal + toysTotal + nutritionTotal;
+
+      document.getElementById('calcTotalAmount').textContent = grandTotal.toLocaleString('ar-SA');
+
+      // Breakdown text
+      document.getElementById('breakdownSessions').textContent = `${sessionsTotal} ر.س (${state.sessions} جلسة)`;
+      document.getElementById('breakdownFilters').textContent = `${filtersTotal} ر.س (${state.filters} طقم)`;
+      document.getElementById('breakdownToys').textContent = `${toysTotal} ر.س (${state.toys} حقيبة)`;
+      document.getElementById('breakdownNutrition').textContent = `${nutritionTotal} ر.س (${state.nutrition} سلة)`;
+
+      // Human Impact
+      const hours = state.sessions * 4;
+      const kids = Math.max(1, Math.ceil(state.sessions / 2));
+
+      document.getElementById('impactHours').textContent = `${hours} ساعة`;
+      document.getElementById('impactSmiles').textContent = `${kids} أطفال`;
+    }
+
+    function proceedFromCalculator() {
+      const grandTotal = (state.sessions * COSTS.sessions) + (state.filters * COSTS.filters) + (state.toys * COSTS.toys) + (state.nutrition * COSTS.nutrition);
+      if (grandTotal <= 0) {
+        window.showToast('يرجى اختيار جلسة واحدة على الأقل للمتابعة', 'info');
+        return;
+      }
+      const desc = `كفالة محسوبة (${state.sessions} جلسات + ${state.filters} فلاتر)`;
+      const url = `donate.html?amount=${encodeURIComponent(grandTotal)}&type=${encodeURIComponent(desc)}&freq=${encodeURIComponent(state.frequency)}`;
+      window.location.href = url;
+    }
+
+    document.addEventListener('DOMContentLoaded', recalculate);
+  </script>
+
+</body>
+</html>
